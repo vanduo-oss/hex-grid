@@ -1,6 +1,6 @@
 {
   "name": "@vanduo-oss/hex-grid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Standalone VdHexGrid package for canvas-based hex grids",
   "type": "module",
   "main": "./dist/index.cjs",

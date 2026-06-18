@@ -96,14 +96,21 @@ export class VdHexGrid {
     _getThemeColors() {
         const root = document.documentElement;
         const style = getComputedStyle(root);
-        
+
+        // Prefer Vanduo's canonical --vd-* tokens; fall back to the legacy
+        // unprefixed names, then to a hardcoded default.
+        const read = (token, legacy, fallback) =>
+            style.getPropertyValue(token).trim()
+            || style.getPropertyValue(legacy).trim()
+            || fallback;
+
         return {
-            bgPrimary: style.getPropertyValue('--bg-primary').trim() || '#ffffff',
-            bgSecondary: style.getPropertyValue('--bg-secondary').trim() || '#f5f5f5',
-            borderColor: style.getPropertyValue('--border-color').trim() || '#e0e0e0',
-            colorPrimary: style.getPropertyValue('--color-primary').trim() || '#3b82f6',
-            textColor: style.getPropertyValue('--text-primary').trim() || '#1f2937',
-            textMuted: style.getPropertyValue('--text-muted').trim() || '#6b7280'
+            bgPrimary: read('--vd-bg-primary', '--bg-primary', '#ffffff'),
+            bgSecondary: read('--vd-bg-secondary', '--bg-secondary', '#f5f5f5'),
+            borderColor: read('--vd-border-color', '--border-color', '#e0e0e0'),
+            colorPrimary: read('--vd-color-primary', '--color-primary', '#3b82f6'),
+            textColor: read('--vd-text-primary', '--text-primary', '#1f2937'),
+            textMuted: read('--vd-text-muted', '--text-muted', '#6b7280')
         };
     }
     
@@ -111,15 +118,41 @@ export class VdHexGrid {
      * Observe theme changes and re-render when theme changes
      */
     _observeThemeChanges() {
-        const observer = new MutationObserver(() => {
+        const reTheme = () => {
             this.themeColors = this._getThemeColors();
             this._render();
-        });
-        
-        observer.observe(document.documentElement, {
+        };
+
+        // Re-render when the document theme attribute flips (e.g. data-theme).
+        this._themeObserver = new MutationObserver(reTheme);
+        this._themeObserver.observe(document.documentElement, {
             attributes: true,
             attributeFilter: ['data-theme']
         });
+
+        // Also follow OS-level light/dark changes that flip token values through a
+        // prefers-color-scheme media query without touching any attribute.
+        if (typeof window !== 'undefined' && window.matchMedia) {
+            this._themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+            this._themeMediaHandler = reTheme;
+            this._themeMedia.addEventListener('change', this._themeMediaHandler);
+        }
+    }
+
+    /**
+     * Disconnect theme listeners. Call before discarding the instance (for example
+     * on SPA navigation) to avoid leaking observers and media-query listeners.
+     */
+    destroy() {
+        if (this._themeObserver) {
+            this._themeObserver.disconnect();
+            this._themeObserver = null;
+        }
+        if (this._themeMedia && this._themeMediaHandler) {
+            this._themeMedia.removeEventListener('change', this._themeMediaHandler);
+            this._themeMedia = null;
+            this._themeMediaHandler = null;
+        }
     }
     
     /**
