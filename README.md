@@ -85,6 +85,33 @@ import {
 } from '@vanduo-oss/hex-grid/hex-math';
 ```
 
+## Vue 3
+
+An optional Vue 3 component ships at `@vanduo-oss/hex-grid/vue`. `vue` is an *optional* peer dependency — needed only when you import this subpath, so vanilla/CDN consumers are unaffected. The component is SSR-safe (the canvas grid is created on mount into a plain container the server can pre-render).
+
+```vue
+<script setup>
+import { VdHexGrid } from '@vanduo-oss/hex-grid/vue';
+
+function onSelect(hex) {
+  console.log('selected', hex);
+}
+</script>
+
+<template>
+  <VdHexGrid :size="30" :width="15" :height="10" @select="onSelect" />
+</template>
+```
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `size` | `number` | `30` | Hexagon size in px. |
+| `width` | `number` | `10` | Grid columns (number of hexes). |
+| `height` | `number` | `10` | Grid rows (number of hexes). |
+| `rotation` | `number` | `0` | Grid rotation in radians. |
+
+Emits `select`, `zoom`, `pan` (forwarded from the grid) plus `ready` (the grid instance, on mount). Prop changes are driven through the instance setters (`setSize`, `setDimensions`, `setRotation`) — no recreate. The component exposes `{ getInstance() }` via template ref for the full imperative API. Types ship with the subpath (`dist/vue.d.ts`).
+
 ## License
 
 MIT

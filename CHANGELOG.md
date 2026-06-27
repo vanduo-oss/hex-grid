@@ -2,6 +2,22 @@
 
 All notable changes to `@vanduo-oss/hex-grid` are documented here.
 
+## [1.1.0] — 2026-06-27
+
+### Added
+- **Optional Vue 3 binding** at `@vanduo-oss/hex-grid/vue` — a `VdHexGrid` component
+  (props `size`, `width`, `height`, `rotation`; emits `select`, `zoom`, `pan`, `ready`).
+  `vue` is an *optional* peer dependency, marked external in the build, so vanilla
+  consumers are unaffected. SSR-safe (the canvas grid is created on mount); prop
+  changes are driven through the instance setters; exposes `{ getInstance() }`.
+- First OpenSpec `vue-bindings` capability; `package-integration` extended with the
+  `./vue` subpath.
+- `llms.txt` LLM context file and a README **Vue 3** section.
+
+### Changed
+- `files` now publishes `CHANGELOG.md`, `LICENSE`, and `llms.txt` alongside `dist/`
+  and `README.md` (previously only `dist/` and `README.md` shipped).
+
 ## [1.0.1]
 
 ### Fixed
