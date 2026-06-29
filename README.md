@@ -1,117 +1,45 @@
 # @vanduo-oss/hex-grid
 
-Standalone `VdHexGrid` package for canvas-based hex grids.
+[![npm](https://img.shields.io/npm/v/@vanduo-oss/hex-grid.svg)](https://www.npmjs.com/package/@vanduo-oss/hex-grid)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
+> Interactive canvas hex grids for the [Vanduo](https://vanduo.dev) design system.
+
+`VdHexGrid` — canvas-based hex grids with axial math, pan/zoom, terrain, and pathfinding. Theme-aware; framework-agnostic core with an optional Vue 3 wrapper.
 
 ## Install
 
-```bash
+```sh
 pnpm add @vanduo-oss/hex-grid
 ```
 
-## Usage
+## Quick start
 
 ```js
-import { VdHexGrid } from '@vanduo-oss/hex-grid';
+import { VdHexGrid } from "@vanduo-oss/hex-grid";
 
 const grid = new VdHexGrid({
-  element: document.getElementById('hex-demo-container'),
-  canvas: document.getElementById('hex-demo'),
+  element: document.getElementById("hex-container"),
   size: 30,
   width: 15,
   height: 10,
-  rotation: 0
 });
+
+grid.on("select", (hex) => console.log("selected", hex));
 ```
 
-## Optional Utility Import
-
-```js
-import { hexToPixel, pixelToHex, hexDistance } from '@vanduo-oss/hex-grid/hex-math';
-```
-
-## API
-
-### Constructor
-
-```js
-new VdHexGrid({ element, canvas, size, width, height, rotation })
-```
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `element` | `HTMLElement` | required | Container element |
-| `canvas` | `HTMLCanvasElement` | auto-created | Canvas element |
-| `size` | `number` | `30` | Hex radius in pixels |
-| `width` | `number` | `10` | Grid width in hexes |
-| `height` | `number` | `10` | Grid height in hexes |
-| `rotation` | `number` | `0` | Grid rotation in radians |
-
-### Methods
-
-- `on(event, callback)` — Subscribe to events (`select`, `zoom`, `pan`)
-- `setSize(size)` — Change hex radius
-- `setDimensions(width, height)` — Change grid dimensions
-- `setRotation(rotation)` — Rotate the grid
-- `reset()` — Reset to defaults
-- `resetView()` — Reset pan and zoom
-- `zoomIn()` / `zoomOut()` — Adjust zoom
-- `fillRandom()` — Fill hexes with random colors
-- `getHex(q, r)` — Get a hex by coordinates
-- `getAllHexes()` — Get all hexes
-- `setHexFill(q, r, color)` — Set hex fill color
-- `setHexTerrain(q, r, terrainType)` — Set hex terrain
-- `getHexTerrain(q, r)` — Get hex terrain
-- `generateRandomTerrain()` — Randomize all terrains
-- `getValidMoves(q, r, movementPoints)` — Get reachable hexes
-- `getPath(startQ, startR, endQ, endR)` — BFS pathfinding
-- `hexDistance(q1, r1, q2, r2)` — Distance between hexes
-- `setHexData(q, r, data)` / `getHexData(q, r)` / `clearHexData(q, r)` — Custom data
-- `exportTerrainData()` / `importTerrainData(data)` — Serialization
-- `setCustomRender(callback)` / `clearCustomRender()` — Per-hex rendering hooks
-
-### Terrain Types
-
-`GRASSLAND`, `PLAINS`, `DESERT`, `TUNDRA`, `SNOW`, `MOUNTAIN`, `OCEAN`, `COAST`
-
-### Hex Math Utilities
-
-```js
-import {
-  hexToPixel, pixelToHex, axialRound, rotatePoint, unrotatePoint,
-  getHexCorners, getAdjacentHexes, hexDistance, isPassable,
-  getMovementCost, getTerrainYields, getTerrainColor,
-  TerrainType, TERRAIN_COLORS, DEFAULT_TERRAIN_COLOR,
-  TERRAIN_YIELDS, TERRAIN_MOVEMENT_COSTS
-} from '@vanduo-oss/hex-grid/hex-math';
-```
-
-## Vue 3
-
-An optional Vue 3 component ships at `@vanduo-oss/hex-grid/vue`. `vue` is an *optional* peer dependency — needed only when you import this subpath, so vanilla/CDN consumers are unaffected. The component is SSR-safe (the canvas grid is created on mount into a plain container the server can pre-render).
+Vue 3 (optional peer): `import { VdHexGrid } from "@vanduo-oss/hex-grid/vue"`.
 
 ```vue
-<script setup>
-import { VdHexGrid } from '@vanduo-oss/hex-grid/vue';
-
-function onSelect(hex) {
-  console.log('selected', hex);
-}
-</script>
-
-<template>
-  <VdHexGrid :size="30" :width="15" :height="10" @select="onSelect" />
-</template>
+<VdHexGrid :size="30" :width="15" :height="10" @select="onSelect" />
 ```
 
-| Prop | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `size` | `number` | `30` | Hexagon size in px. |
-| `width` | `number` | `10` | Grid columns (number of hexes). |
-| `height` | `number` | `10` | Grid rows (number of hexes). |
-| `rotation` | `number` | `0` | Grid rotation in radians. |
+## Documentation
 
-Emits `select`, `zoom`, `pan` (forwarded from the grid) plus `ready` (the grid instance, on mount). Prop changes are driven through the instance setters (`setSize`, `setDimensions`, `setRotation`) — no recreate. The component exposes `{ getInstance() }` via template ref for the full imperative API. Types ship with the subpath (`dist/vue.d.ts`).
+- Docs & live demos — https://vanduo.dev
+- Agent / LLM reference (full class + hex-math API) — [SKILL.md](./SKILL.md)
+- Changelog — [CHANGELOG.md](./CHANGELOG.md)
 
 ## License
 
-MIT
+[MIT](./LICENSE) © Vanduo
