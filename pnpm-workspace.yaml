@@ -2,3 +2,9 @@
 onlyBuiltDependencies:
   - esbuild
   - "@playwright/test"
+
+# Retirement-time pins for transitive dev-dependency advisories, so the final
+# CI run and archived state are clean. These affect this repo's own install
+# only — pnpm overrides do not propagate to consumers of the published package.
+overrides:
+  postcss: ">=8.5.18"
