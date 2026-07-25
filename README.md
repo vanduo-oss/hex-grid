@@ -3,6 +3,12 @@
 [![npm](https://img.shields.io/npm/v/@vanduo-oss/hex-grid.svg)](https://www.npmjs.com/package/@vanduo-oss/hex-grid)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
+> **⚠️ Retired — 2026-07-25.** `@vanduo-oss/hex-grid` is no longer developed or released.
+> The Vanduo **legacy** line (the dual-engine Vanilla + Vue 3 system) is retired; development
+> continues in the **perspective** line. `@vanduo-oss/vd3-cbun/hex-grid` is the successor. The final release, `1.1.0`, stays on npm and keeps working — this is a stop to development, not a removal.
+>
+> New docs: <https://vanduo-oss.github.io/vd3-docs/> · Migration guide: <https://vanduo-oss.github.io/vd3-docs/guides/migration>
+
 > Interactive canvas hex grids for the [Vanduo](https://vanduo.dev) design system.
 
 `VdHexGrid` — canvas-based hex grids with axial math, pan/zoom, terrain, and pathfinding. Theme-aware; framework-agnostic core with an optional Vue 3 wrapper.
