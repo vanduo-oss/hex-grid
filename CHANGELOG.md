@@ -2,6 +2,10 @@
 
 All notable changes to `@vanduo-oss/hex-grid` are documented here.
 
+## Retired — 2026-07-25
+
+The Vanduo legacy (dual-engine) line is retired. `1.1.0` is the final release of `@vanduo-oss/hex-grid`; no further versions will be published. The package remains installable on npm. The repository is archived (read-only) and the git tag `retired-v1.1.0` marks the final state. Successor: `@vanduo-oss/vd3-cbun/hex-grid` — see `README.md`.
+
 ## [1.1.0] — 2026-06-27
 
 ### Added

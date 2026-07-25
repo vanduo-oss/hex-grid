@@ -1,9 +1,15 @@
 ---
 name: vanduo-hex-grid
-description: Use when building interactive hex grids with @vanduo-oss/hex-grid — a standalone canvas VdHexGrid (axial math, pan/zoom, terrain, pathfinding) with an optional Vue 3 wrapper. Covers install, the class + hex-math API, events, security, and caveats.
+description: Use when building interactive hex grids with @vanduo-oss/hex-grid — a standalone canvas VdHexGrid (axial math, pan/zoom, terrain, pathfinding) with an optional Vue 3 wrapper. Covers install, the class + hex-math API, events, security, and caveats. RETIRED 2026-07-25 — final version 1.1.0; successor: `@vanduo-oss/vd3-cbun/hex-grid`; no further releases.
 ---
 
 # @vanduo-oss/hex-grid
+
+> **⚠️ Retired — 2026-07-25.** `@vanduo-oss/hex-grid` is no longer developed or released.
+> The Vanduo **legacy** line (the dual-engine Vanilla + Vue 3 system) is retired; development
+> continues in the **perspective** line. `@vanduo-oss/vd3-cbun/hex-grid` is the successor. The final release, `1.1.0`, stays on npm and keeps working — this is a stop to development, not a removal.
+>
+> New docs: <https://vanduo-oss.github.io/vd3-docs/> · Migration guide: <https://vanduo-oss.github.io/vd3-docs/guides/migration>
 
 Standalone **canvas hex-grid** for the Vanduo design system: `VdHexGrid` with axial hex math, pan/zoom, terrain, and BFS pathfinding. Theme-aware (reads `--vd-*` tokens); framework-agnostic core with an optional Vue 3 wrapper at `./vue`.
 
